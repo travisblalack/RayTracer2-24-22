@@ -12,7 +12,7 @@
 <script src='math/sphere.js'></script>
 <script src='math/plane.js'></script>
 <script>
-
+// Travis Blalack and Julian Fortin 2/28/22
 // Canvas setup, don't need to anything in this section ************************
 // Get a reference to the javascript object associated with the canvas
 var canvas = document.getElementById('my-canvas');
@@ -121,7 +121,12 @@ function updateAndRender(timeElapsed) {
 			// Uncomment when your sphere or plane code is ready
 			var sphereResult = sphere.raycast(pixelRay);
 			var planeResult = plane.raycast(pixelRay);
-			var lightPoint = new Vector3((0, 1, 0),new Vector3(0,0,-1));
+			var lightPoint = new Vector3(0, 1, 0);
+			var floorResult = floor.raycast(pixelRay);
+			var leftWallResult = leftWall.raycast(pixelRay);
+			var rightWallResult = rightWall.raycast(pixelRay);
+			var ceilingResult = ceiling.raycast(pixelRay);
+			var backWallResult = backWall.raycast(pixelRay);
 			
 			// Get the cos(theta) between the 2 vectors
 			
@@ -177,6 +182,11 @@ function updateAndRender(timeElapsed) {
 				var normalDotLight = sphereResult.normal.dot(sphereResult.point.fromTo(sphereResult.point,lightPos).normalize());
 			
 				setPixelColor(xPixelIndex, yPixelIndex, normalDotLight);
+
+			}else if (backWallResult.hit == true){
+				var shadowRay = new Ray(Result.point, new Vector3().fromTo(sphereResult.point,lightPos).normalize());
+				var light = lightPos.clone().subtract(backWallResult.point);
+				var normalDotLight = backWallResult.normal.dot(backWallResult.point.fromTo(backWallResults.point,lightPos).normalize());
 			} else {
 				// we didn't hit anything, choose an appropriate backbround color
 				setPixelColor(xPixelIndex, yPixelIndex, 0.1);
