@@ -86,8 +86,7 @@ Sphere.prototype = {
     }
     /////////////
     var distance = Math.min(point_x1,point_x2);
-    console.log(distance)
-    console.log(r1)
+   
     if(point_x1 < point_x2){
       var result ={
         hit : true,
@@ -113,7 +112,7 @@ Sphere.prototype = {
         distance: distance
       }
     }
-      console.log(result)
+      
       return result;
       }
     }
